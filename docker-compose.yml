@@ -28,7 +28,7 @@ services:
     depends_on:
       - postgres
       - redis
-    command: sh -c "python initialize.py && gunicorn -b :80 -w 3 gavel:app"
+    command: sh -c "python initialize.py && celery -A gavel:celery worker --loglevel=info -E & gunicorn -b :80 -w 3 gavel:app"
 
 volumes:
   postgres-data:
